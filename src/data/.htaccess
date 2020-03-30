@@ -1,0 +1,11 @@
+RewriteEngine On
+
+RewriteCond %{ENV:URI} ^$
+RewriteRule ^(.*)$ - [ENV=URI:$1]
+
+RewriteCond %{ENV:BASE} ^$
+RewriteCond %{ENV:URI}::%{REQUEST_URI} ^(.*)::(.*?)\1$
+RewriteRule ^ - [ENV=BASE:%2]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^dataset\.json$ %{ENV:BASE}get.php [P,L]

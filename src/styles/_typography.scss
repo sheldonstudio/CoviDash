@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'SoleSans-Light';
+  src: url('./fonts/SoleSans-LightExtraCondensedWCD.woff') format('woff'),
+    url('./fonts/SoleSans-LightExtraCondensedWCD.woff2') format('woff2'),
+    url('./fonts/SoleSans-LightExtraCondensedWCD.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SoleSans-Book';
+  src: url('./fonts/SoleSans-BookExtendedWCD.woff') format('woff'),
+    url('./fonts/SoleSans-BookExtendedWCD.woff2') format('woff2'),
+    url('./fonts/SoleSans-BookExtendedWCD.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

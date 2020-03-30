@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="{{ configuration.language }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="{{ configuration.basePath }}/images/opengraph.png">
+    <meta name="og:title" content="{{ configuration.opengraph.title }}">
+    <meta name="og:description" content="{{ configuration.opengraph.description|safe }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#041967">
+    <title>{{ configuration.pageTitle }}</title>
+    <link rel="icon" type="image/png" href="{{ configuration.basePath }}/images/favicon.png">
+    <link rel="apple-touch-icon" href="{{ configuration.basePath }}/images/apple-touch-icon.png">
+    <link rel="icon" sizes="192x192" href="{{ configuration.basePath }}/images/android-large-icon.png" />
+    <link rel="icon" sizes="128x128" href="{{ configuration.basePath }}/images/android-medium-icon.png" />
+    <link rel="stylesheet" href="{{ configuration.basePath }}/styles.min.css">
+    <script>
+      window['globalConfiguration'] = {{ configuration|dump|safe }};
+    </script>
+    {% if configuration.analytics %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ configuration.analytics }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', '{{ configuration.analytics }}', {
+        'anonymize_ip': true
+      });
+    </script>
+    {% endif %}
+  </head>
+  <body>
+    <header>
+      <div class="context">
+        <ul>
+          <li>CONTEXT</li>
+        </ul>
+      </div>
+      <div class="last-update">
+        <div class="label">{{ configuration.labels.lastUpdate|safe }}</div>
+        <span>01.01.2000</span>
+      </div>
+    </header>
+    <main>
+      <div id="boxes">
+        <div id="box-positives" class="box">
+          <div class="contains-chart">
+            <div class="chart"></div>
+            <div class="date">01 JAN</div>
+          </div>
+          <div class="line"></div>
+          <div class="count">000</div>
+          <div class="label">{{ configuration.labels.positives|safe }}</div>
+          <div class="line"></div>
+          <div class="delta">
+            <div class="value" data-sign="true">+000</div>
+            <div class="updated">SINCE 01 JAN 1970</div>
+          </div>
+        </div>
+        <div id="box-recovered" class="box">
+          <div class="contains-chart">
+            <div class="chart"></div>
+            <div class="date">01 JAN</div>
+          </div>
+          <div class="line"></div>
+          <div class="count">000</div>
+          <div class="label">{{ configuration.labels.recovered|safe }}</div>
+          <div class="line"></div>
+          <div class="delta">
+            <div class="value" data-sign="true">+000</div>
+            <div class="updated">SINCE 01 JAN 1970</div>
+          </div>
+        </div>
+        <div id="box-deceased" class="box">
+          <div class="contains-chart">
+            <div class="chart"></div>
+            <div class="date">01 JAN</div>
+          </div>
+          <div class="line"></div>
+          <div class="count">000</div>
+          <div class="label">{{ configuration.labels.deceased|safe }}</div>
+          <div class="line"></div>
+          <div class="delta">
+            <div class="value" data-sign="true">+000</div>
+            <div class="updated">SINCE 01 JAN 1970</div>
+          </div>
+        </div>
+      </div>
+      <div id="swabs">
+        <div id="swabs-total" class="swab">
+          <h2>{{ configuration.labels.swabsTotal|safe }}</h2>
+          <div class="value">000</div>
+        </div>
+        <div id="swabs-positives" class="swab">
+          <h2>{{ configuration.labels.swabsRatio|safe }}</h2>
+          <div class="value"><span class="number">00,00</span>%</div>
+        </div>
+      </div>
+      <div id="trend">
+        <h2>TREND</h2>
+        <div class="contains-chart">
+          <div class="chart"></div>
+        </div>
+      </div>
+      <div id="drilldown-navigation">
+        <h2>{{ configuration.labels.drilldownNavigationTitle|safe }}</h2>
+        <nav>
+          <ul>
+            <li><a id="drilldown-navigation-positives" class="is-active">{{ configuration.labels.drilldownPositivesButton|safe }}</a></li>
+            <li><a id="drilldown-navigation-recovered">{{ configuration.labels.drilldownRecoveredButton|safe }}</a></li>
+            <li><a id="drilldown-navigation-deceased">{{ configuration.labels.drilldownDeceasedButton|safe }}</a></li>
+            <li><a id="drilldown-navigation-all">{{ configuration.labels.drilldownAllButton|safe }}</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div id="drilldown-positives" class="drilldown is-active">
+        <div class="header">
+          <h2>POSITIVES</h2>
+          <nav>
+            <a href="#" class="is-selected" data-sortby="delta">{{ configuration.labels.drilldownSortByDelta }} <img src="{{ configuration.basePath }}/images/sortby.svg"/></a>
+            <a href="#" data-sortby="total">{{ configuration.labels.drilldownSortByTotal }} <img src="{{ configuration.basePath }}/images/sortby.svg"/></a>
+          </nav>
+        </div>
+        <ul class="contains-tuples"></ul>
+      </div>
+      <div id="drilldown-recovered" class="drilldown">
+        <div class="header">
+          <h2>RECOVERED</h2>
+          <nav>
+            <a href="#" class="is-selected" data-sortby="delta">{{ configuration.labels.drilldownSortByDelta }} <img src="{{ configuration.basePath }}/images/sortby.svg"/></a>
+            <a href="#" data-sortby="total">{{ configuration.labels.drilldownSortByTotal }} <img src="{{ configuration.basePath }}/images/sortby.svg"/></a>
+          </nav>
+        </div>
+        <ul class="contains-tuples"></ul>
+      </div>
+      <div id="drilldown-deceased" class="drilldown">
+        <div class="header">
+          <h2>DECEASED</h2>
+          <nav>
+            <a href="#" class="is-selected" data-sortby="delta">{{ configuration.labels.drilldownSortByDelta }} <img src="{{ configuration.basePath }}/images/sortby.svg"/></a>
+            <a href="#" data-sortby="total">{{ configuration.labels.drilldownSortByTotal }} <img src="{{ configuration.basePath }}/images/sortby.svg"/></a>
+          </nav>
+        </div>
+        <ul class="contains-tuples"></ul>
+      </div>
+      <div id="navigation"></div>
+    </main>
+    <footer>
+      <div class="text">{{ configuration.footer.text|safe }}</div>
+      <div class="credits">
+        <div class="credit"><label>{{ configuration.footer.dev|safe }}:</label> <a href="https://sheldon.studio" target="_blank">Sheldon.studio</a></div>
+        <div class="credit"><label>{{ configuration.footer.fonts|safe }}:</label> <a href="https://www.c-a-s-t.com/" target="_blank">CAST Foundry with Sole Sans</a></div>
+        <div class="credit"><label>{{ configuration.footer.special|safe }}:</label> <a href="https://ict.fbk.eu/people/detail/maurizio-napolitano/" target="_blank">Maurizio Napolitano</a>, Massimo Gonzato, Ann Barnett</div>
+        <div class="credit"><label>{{ configuration.footer.data|safe }}:</label> <a href="https://github.com/pcm-dpc/COVID-19" target="_blank">Protezione Civile</a></div>
+        <div class="source">
+          &#x1F449; <a href="https://github.com/sheldonstudio/CoviDash" target="_blank">{{ configuration.labels.sourceCodeOnGithub|safe }}</a>
+        </div>
+      </div>
+    </footer>
+    <div id="loader">
+      <div class="message">{{ configuration.labels.loadingData|safe }}</div>
+    </div>
+    <script src="{{ configuration.basePath }}/scripts.min.js"></script>
+  </body>
+</html>

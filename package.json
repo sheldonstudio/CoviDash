@@ -1,0 +1,45 @@
+{
+  "name": "covidash",
+  "version": "1.0.0",
+  "license": "AGPL-3.0-or-later",
+  "author": [
+    {
+      "name": "Matteo Moretti",
+      "email": "matteo@sheldon.studio",
+      "url": "http://sheldon.studio"
+    },
+    {
+      "name": "Daniel Rampanelli",
+      "email": "daniel@sheldon.studio",
+      "url": "http://sheldon.studio"
+    }
+  ],
+  "devDependencies": {
+    "bourbon": "^7.0.0",
+    "breakpoint-sass": "^2.7.1",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-cache-bust": "^1.4.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-copy": "^4.0.1",
+    "gulp-imagemin": "^6.2.0",
+    "gulp-mode": "^1.0.2",
+    "gulp-nunjucks-render": "^2.2.3",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "gulp-util": "^3.0.8",
+    "gulp-webserver": "^0.9.1",
+    "lodash": "^4.17.15",
+    "node-sass": "^4.13.1"
+  },
+  "scripts": {
+    "clean": "gulp clean",
+    "dump-data": "php src/data/fetch.php > src/data/dataset.json",
+    "build": "gulp build",
+    "package": "gulp build --production",
+    "watch": "gulp watch",
+    "serve": "gulp serve"
+  }
+}

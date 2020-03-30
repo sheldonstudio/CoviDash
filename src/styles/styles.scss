@@ -1,0 +1,796 @@
+@import "./normalize.css";
+@import "bourbon";
+@import "breakpoint";
+@import "typography";
+
+$color-blue: #041967;
+$color-lightblue: #053795;
+$color-electricblue: #007AFF;
+$color-white: #F6DAE2;
+$color-yellow: #FFD99C;
+$color-green: #B0FF9C;
+$color-red: #FB4375;
+
+$font-light: 'SoleSans-Light';
+$font-book: 'SoleSans-Book';
+
+$bp04: 480px;
+$bp07: 768px;
+$bp09: 992px;
+$bp12: 1200px;
+
+html, body {
+  background-color: $color-blue;
+}
+
+span.unbreakable {
+  white-space: nowrap;
+}
+
+header {
+  background-color: $color-lightblue;
+  display: flex;
+  height: 38px;
+  left: 0;
+  padding: 0 16px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+
+  .context {
+    flex: 1;
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: inline-block;
+        list-style-type: none;
+
+        a {
+          color: $color-electricblue;
+          cursor: pointer;
+          display: inline-block;
+          font-family: $font-book;
+          font-size: 22px;
+          font-weight: bold;
+          line-height: 38px;
+          max-width: 120px;
+          overflow: hidden;
+          text-decoration: none;
+          text-overflow: ellipsis;
+          text-transform: uppercase;
+          white-space: nowrap;
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+          &:after {
+            content: '/';
+            display: inline-block;
+            padding: 0 4px;
+          }
+
+          @include breakpoint($bp04) {
+            max-width: 160px;
+          }
+
+          @include breakpoint($bp07) {
+            max-width: inherit;
+          }
+        }
+
+        &:last-child a:after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .last-update {
+    color: $color-electricblue;
+    font-family: $font-book;
+    font-size: 14px;
+    line-height: 44px;
+    text-transform: uppercase;
+
+    .label {
+      display: none;
+    }
+
+    @include breakpoint($bp07) {
+      .label {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 88px 16px 0 16px;
+
+  h2 {
+    color: $color-electricblue;
+    font-family: $font-book;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 17px;
+    margin: 0;
+    padding: 4px 0;
+    text-transform: uppercase;
+  }
+
+  #boxes {
+    display: flex;
+    flex-basis: 100%;
+    margin: 0;
+    order: 0;
+
+    .box {
+      flex-basis: percentage(1 / 3);
+      margin-right: 38px;
+      padding: 0;
+
+      .line {
+        background-color: $color-lightblue;
+        height: 1px;
+        margin-right: -38px;
+      }
+
+      .contains-chart {
+        .chart {
+          height: 48px;
+          margin: 0 0 4px 0;
+          overflow: hidden;
+          width: 100%;
+
+          path {
+            fill: none;
+            stroke-width: 1;
+          }
+        }
+
+        .date {
+          color: $color-white;
+          font-family: $font-book;
+          font-size: 12px;
+          letter-spacing: 0;
+          line-height: 20px;
+          text-transform: uppercase;
+        }
+      }
+
+      .count {
+        font-family: $font-light;
+        font-size: 40px;
+        letter-spacing: 0;
+        line-height: 50px;
+        padding: 24px 0 0 0;
+      }
+
+      .label {
+        color: $color-white;
+        font-family: $font-book;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 17px;
+        padding: 4px 0;
+        text-transform: uppercase;
+      }
+
+      .delta {
+        font-family: $font-book;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 17px;
+        padding: 12px 0 32px 0;
+        position: relative;
+
+        @include breakpoint($bp07) {
+          padding: 12px 0;
+        }
+
+        .updated {
+          color: $color-electricblue;
+          display: none;
+          font-family: $font-book;
+          font-size: 14px;
+          letter-spacing: 0;
+          line-height: 12px;
+          margin: 8px 0 0 0;
+          opacity: 0.30;
+          position: absolute;
+          text-transform: uppercase;
+          width: 200px;
+
+          @include breakpoint($bp07) {
+            display: block;
+            position: static;
+            width: 100%;
+          }
+        }
+      }
+
+      &:first-child {
+        .delta .updated {
+          display: block;
+        }
+      }
+
+      &:last-child {
+        &, .line {
+          margin-right: 0;
+        }
+      }
+    }
+
+    #box-positives {
+      .contains-chart .chart {
+        path {
+          stroke: $color-yellow;
+        }
+      }
+
+      .count, .delta {
+        color: $color-yellow;
+      }
+    }
+
+    #box-recovered {
+      .contains-chart .chart {
+        path {
+          stroke: $color-green;
+        }
+      }
+
+      .count, .delta {
+        color: $color-green;
+      }
+    }
+
+    #box-deceased {
+      .contains-chart .chart {
+        path {
+          stroke: $color-red;
+        }
+      }
+
+      .count, .delta {
+        color: $color-red;
+      }
+    }
+  }
+
+  #swabs {
+    border-color: $color-lightblue;
+    border-style: solid;
+    border-width: 1px 0;
+    display: flex;
+    flex-basis: 100%;
+    order: 2;
+    padding: 8px 0;
+
+    .swab {
+      display: inline-block;
+      flex: 1;
+
+      h2, .value {
+        display: block;
+      }
+
+      .value {
+        color: $color-white;
+        font-family: $font-book;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 17px;
+      }
+    }
+
+    #swabs-positives {
+      .value {
+        color: $color-yellow;
+      }
+    }
+
+    @include breakpoint($bp07) {
+      display: block;
+
+      .swab {
+        margin-right: 32px;
+
+        h2, .value {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  #trend {
+    border-bottom: 1px solid rgba(#007AFF, 0.30);
+    flex-basis: 100%;
+    margin: 16px 0;
+    order: 4;
+    padding: 0 0 16px 0;
+
+    @include breakpoint($bp07) {
+      border: 0;
+      display: flex;
+      flex-basis: percentage(1 / 3);
+      flex-direction: column;
+      margin: 16px 0 0 0;
+      padding: 0;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    h2 {
+      padding: 8px 0;
+    }
+
+    .contains-chart {
+      height: 100%;
+      position: relative;
+
+      &:after {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+      }
+
+      @include breakpoint($bp04) {
+        &:after {
+          padding-bottom: 50%;
+        }
+      }
+
+      .chart {
+        bottom: (16px + 16px + 1px);
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        .domain {
+          display: none;
+        }
+
+        .grid {
+          line {
+            stroke: $color-lightblue;
+            shape-rendering: crispEdges;
+          }
+
+          text {
+            font-family: $font-book;
+            font-size: 8px;
+            fill: $color-white;
+            text-transform: uppercase;
+          }
+        }
+
+        .grid--x {
+          text {
+            text-anchor: middle;
+          }
+        }
+
+        .grid--y {
+          text {
+            text-anchor: start;
+          }
+        }
+
+        @include breakpoint($bp07) {
+          bottom: 8px;
+        }
+      }
+    }
+  }
+
+  #drilldown-navigation {
+    flex-basis: 100%;
+    height: 64px;
+    order: 6;
+
+    @include breakpoint($bp09) {
+      display: none;
+    }
+
+    h2 {
+      padding: 8px 0;
+    }
+
+    nav {
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          display: inline-block;
+          list-style-type: none;
+
+          a {
+            background-color: transparent;
+            border-radius: 2px;
+            border-style: solid;
+            border-width: 1px;
+            cursor: pointer;
+            display: inline-block;
+            font-family: $font-book;
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 25px;
+            padding: 2px 8px;
+            transition: all 0.2s ease-in-out;
+          }
+
+          #drilldown-navigation-positives {
+            border-color: $color-yellow;
+            color: $color-yellow;
+
+            &.is-active {
+              background-color: $color-yellow;
+              color: $color-blue;
+            }
+          }
+
+          #drilldown-navigation-deceased {
+            border-color: $color-red;
+            color: $color-red;
+
+            &.is-active {
+              background-color: $color-red;
+              color: $color-blue;
+            }
+          }
+
+          #drilldown-navigation-recovered {
+            border-color: $color-green;
+            color: $color-green;
+
+            &.is-active {
+              background-color: $color-green;
+              color: $color-blue;
+            }
+          }
+
+          #drilldown-navigation-all {
+            border-color: $color-white;
+            color: $color-white;
+
+            &.is-active {
+              background-color: $color-white;
+              color: $color-blue;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .drilldown {
+    display: none;
+    flex-basis: 100%;
+    margin: 16px 0 0 0;
+    order: 8;
+
+    &.is-active {
+      display: block;
+    }
+
+    @include breakpoint($bp09) {
+      box-sizing: border-box;
+      display: block;
+      flex-basis: percentage(1 / 3);
+      padding: 0 24px 0 0;
+
+      &:last-of-type {
+        padding: 0;
+      }
+    }
+
+    .header {
+      display: flex;
+
+      h2 {
+        flex: 1;
+      }
+
+      nav {
+        a {
+          color: $color-electricblue;
+          font-family: $font-book;
+          font-size: 14px;
+          letter-spacing: 0;
+          line-height: 17px;
+          opacity: 0.5;
+          text-decoration: none;
+
+          img {
+            width: 10px;
+          }
+
+          &.is-selected {
+            opacity: 1.0;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    ul.contains-tuples {
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: flex;
+        list-style-type: none;
+        width: 100%;
+
+        .name {
+          flex: 1;
+          font-family: $font-book;
+          font-size: 10px;
+          letter-spacing: 0;
+          line-height: 16px;
+          overflow: hidden;
+          margin: 0 8px 0 0;
+          text-transform: uppercase;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 100%;
+        }
+
+        .delta {
+          margin: 0 8px 0 0;
+        }
+
+        .total, .delta {
+          display: flex;
+          flex: 1;
+
+          .value {
+            font-family: $font-book;
+            font-size: 10px;
+            letter-spacing: 0;
+            line-height: 16px;
+            margin: 0 8px 0 0;
+            text-align: right;
+            width: 40px;
+          }
+
+          .contains-chart {
+            flex: 1;
+
+            .chart {
+              .total-ratio {
+                fill-opacity: 0.25;
+              }
+            }
+          }
+        }
+
+        .total {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  #drilldown-positives .contains-tuples {
+    .name {
+      color: $color-yellow;
+    }
+
+    .total, .delta {
+      .value {
+        color: $color-yellow;
+      }
+
+      .contains-chart .chart rect {
+        fill: $color-yellow;
+      }
+    }
+  }
+
+  #drilldown-recovered .contains-tuples {
+    .name {
+      color: $color-green;
+    }
+
+    .total, .delta {
+      .value {
+        color: $color-green;
+      }
+
+      .contains-chart .chart rect {
+        fill: $color-green;
+      }
+    }
+  }
+
+  #drilldown-deceased .contains-tuples {
+    .name {
+      color: $color-red;
+    }
+
+    .total, .delta {
+      .value {
+        color: $color-red;
+      }
+
+      .contains-chart .chart rect {
+        fill: $color-red;
+      }
+    }
+  }
+
+  #navigation {
+    border-top: 1px solid rgba(#007AFF, 0.30);
+    flex-basis: 100%;
+    margin: 16px 0 0 0;
+    order: 10;
+
+    @include breakpoint($bp07) {
+      box-sizing: border-box;
+      border: 0;
+      flex-basis: percentage((1 / 3) * 2);
+      margin: 16px 0 0 0;
+      order: 5;
+      padding: 0 0 0 24px;
+    }
+
+    nav {
+      margin: 16px 0 0 0;
+
+      @include breakpoint($bp07) {
+        margin: 0 0 8px 0;
+
+        h2 {
+          padding: 8px 0;
+        }
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          display: inline-block;
+          list-style-type: none;
+          margin: 0 4px 4px 0;
+
+          a {
+            border: 1px solid $color-white;
+            border-radius: 2px;
+            color: $color-white;
+            cursor: pointer;
+            display: inline-block;
+            font-family: $font-book;
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 25px;
+            opacity: 0.60;
+            padding: 2px 8px;
+            transition: all 0.2s ease-in-out;
+
+            &.is-active {
+              background-color: $color-white;
+              color: $color-blue;
+              opacity: 1.00;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+footer {
+  border-color: $color-lightblue;
+  border-style: solid;
+  color: $color-white;
+  border-width: 1px 0 0 0;
+  font-family: $font-book;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 19px;
+  margin: 32px 0;
+  padding: 32px 16px 64px 16px;
+
+  a {
+    color: $color-white;
+    text-decoration: underline;
+  }
+
+  .text {
+    margin: 0 0 16px 0;
+  }
+
+  .credits {
+    margin: 0 0 16px 0;
+
+    .credit {
+      label {
+        color: $color-electricblue;
+      }
+    }
+
+    .source {
+      margin: 16px 0 0 0;
+    }
+  }
+
+  @include breakpoint($bp07) {
+    display: flex;
+    flex-wrap: wrap;
+
+    .text, .credits {
+      box-sizing: border-box;
+      flex-basis: 50%;
+    }
+
+    .credits {
+      .credit {
+        display: inline;
+      }
+    }
+
+    .text {
+      padding-right: 16px;
+    }
+
+    .credits {
+      padding-left: 16px;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1.0;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+#loader {
+  background-color: $color-blue;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10000;
+
+  .message {
+    animation: pulse 0.67s alternate infinite;
+    color: $color-electricblue;
+    font-family: $font-book;
+    font-size: 14px;
+    letter-spacing: 0;
+    left: 50%;
+    line-height: 17px;
+    position: absolute;
+    text-transform: uppercase;
+    transform: translate(-50%, -50%);
+    top: 50%;
+  }
+}

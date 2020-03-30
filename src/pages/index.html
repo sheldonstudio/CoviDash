@@ -1,0 +1,47 @@
+{% set configuration = {
+  "language": "it",
+  "basePath": baseConfig.basePath,
+  "analytics": baseConfig.analytics,
+  "opengraph": {
+    "title": "CoviDash | the Coronavirus mobile-first dashboard",
+    "description": "Covidash è la prima dashboard mobile-friendly open-source che visualizza i dati relativi al  Coronavirus, progettata da Sheldon.studio."
+  },
+  "pageTitle": "CoviDash | the Coronavirus mobile-first dashboard",
+  "labels": {
+    "loadingData": "Caricamento dati ...",
+    "lastUpdate": "Aggiornamento:",
+    "differenceFromPreviousUpdate": "DAL %s",
+    "positives": "Positivi",
+    "recovered": "Guariti",
+    "deceased": "Deceduti",
+    "swabsTotal": "Tamponi",
+    "swabsRatio": "Tasso Positivit&agrave;",
+    "trendTitle": "Andamento %s",
+    "trendCountryTitlePart": "Nazionale",
+    "drilldownNavigationTitle": "Esplora i casi per regione",
+    "drilldownPositivesButton": "Positivi",
+    "drilldownRecoveredButton": "Guarigioni",
+    "drilldownDeceasedButton": "Decessi",
+    "drilldownPositivesTitle": "%s: Positivi",
+    "drilldownRecoveredTitle": "%s: Guarigioni",
+    "drilldownDeceasedTitle": "%s: Decessi",
+    "drilldownAllButton": "Tutti",
+    "drilldownCountryTitlePart": "Regioni",
+    "drilldownSortByTotal": "TOT",
+    "drilldownSortByDelta": "DIFF",
+    "sourceCodeOnGithub": "Codice sorgente disponibile su Github"
+  },
+  "footer": {
+    "text": "Come progettisti, sviluppatori e cittadini abbiamo deciso di mettere a disposizione le nostre competenze per migliorare gli strumenti di visualizzazione e quindi di monitoraggio dei dati relativi al Coronavirus.<br/><br/>Lasciate i vostri feedback su &nbsp; <span class=\"unbreakable\">&#x1F449; <a href=\"mailto:write@sheldon.studio\">write@sheldon.studio</a></span>.",
+    "dev": "Design+Dev",
+    "fonts": "Type consulting and licensed typeface",
+    "special": "Special thanks to",
+    "data": "Data"
+  },
+  "delimiters": {
+    "thousands": ".",
+    "decimal": ","
+  }
+} %}
+
+{% extends 'template.html' %}

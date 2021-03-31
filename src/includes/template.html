@@ -7,6 +7,8 @@
     <meta name="og:image" content="{{ configuration.basePath }}/images/opengraph.png">
     <meta name="og:title" content="{{ configuration.opengraph.title }}">
     <meta name="og:description" content="{{ configuration.opengraph.description|safe }}">
+    <meta name="description" content="{{ configuration.pageDescription|safe }}"/>
+    <meta name="keywords" content="{{ configuration.pageKeywords|safe }}"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#041967">
     <title>{{ configuration.pageTitle }}</title>
@@ -19,15 +21,21 @@
       window['globalConfiguration'] = {{ configuration|dump|safe }};
     </script>
     {% if configuration.analytics %}
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ configuration.analytics }}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', '{{ configuration.analytics }}', {
-        'anonymize_ip': true
-      });
-    </script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ configuration.analytics }}"></script>
+      <script>
+        window['setupAnalytics'] = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', '{{ configuration.analytics }}', {
+            'anonymize_ip': true
+          });
+        }
+      </script>
+    {% endif %}
+    {% if configuration.privacyPolicy %}
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+      <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
     {% endif %}
   </head>
   <body>
@@ -161,6 +169,33 @@
     <div id="loader">
       <div class="message">{{ configuration.labels.loadingData|safe }}</div>
     </div>
+    {% if configuration.privacyPolicy %}
+      <script>
+        window.cookieconsent.initialise({
+          container: document.body,
+          type: 'opt-in',
+          palette:{
+            popup: { background: '#f6dae2', text: '#041967' },
+            button: { background: '#007aff' }
+          },
+          content: {
+            href: '{{ configuration.privacyPolicy }}'
+          },
+          onInitialise: function () {
+            if (this.hasConsented()) {
+              if (!!window['setupAnalytics']) setupAnalytics();
+            }
+          },
+          onStatusChange: function(status, chosenBefore) {
+            window.location.reload();
+          }
+        });
+      </script>
+    {% else %}
+      <script>
+        if (!!window['setupAnalytics']) setupAnalytics();
+      </script>
+    {% endif %}
     <script src="{{ configuration.basePath }}/scripts.min.js"></script>
   </body>
 </html>

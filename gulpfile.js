@@ -93,7 +93,7 @@ gulp.task('styles', gulp.parallel('copy-fonts', () => {
 
 gulp.task('scripts', () => {
   return gulp.src(paths.scripts)
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(concat('scripts.min.js'))
     .pipe(gulp.dest(paths.build));
 });

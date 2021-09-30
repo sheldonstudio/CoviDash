@@ -398,7 +398,7 @@ $(function () {
 
     renderBoxCharts(data);
 
-    $('#totals .updated').text(sprintf(globalConfiguration.labels.differenceFromPreviousUpdate, moment('20200225').format('D MMMM YYYY')));
+    $('#totals .updated').text(sprintf(globalConfiguration.labels.differenceFromPreviousUpdate, moment('20200224').format('D MMMM YYYY')));
 
     $('#totals .positives .value').attr('data-number', data.positives.total);
     $('#totals .positives .value').text(numeral(data.positives.total).format());

@@ -36,7 +36,7 @@
   },
   "scripts": {
     "clean": "gulp clean",
-    "dump-data": "php src/data/fetch.php > src/data/dataset.json",
+    "dump-data": "php -dmemory_limit=2G src/data/get.php > src/data/dataset.json",
     "build": "gulp build",
     "package": "gulp build --production",
     "watch": "gulp watch",

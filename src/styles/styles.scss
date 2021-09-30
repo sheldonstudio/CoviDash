@@ -28,13 +28,16 @@ span.unbreakable {
 }
 
 header {
-  background-color: $color-lightblue;
-  display: flex;
-  height: 38px;
+  background-color: $color-blue;
+  border-bottom: 1px solid rgba($color-electricblue, 0.30);
+  box-sizing: border-box;
+  height: 64px;
   left: 0;
-  padding: 0 16px;
+  margin: 0 16px;
+  padding: 8px 0;
   position: fixed;
   right: 0;
+  text-align: center;
   top: 0;
   z-index: 1000;
 
@@ -50,14 +53,14 @@ header {
         list-style-type: none;
 
         a {
-          color: $color-electricblue;
+          color: $color-white;
           cursor: pointer;
           display: inline-block;
           font-family: $font-book;
           font-size: 22px;
           font-weight: bold;
-          line-height: 38px;
-          max-width: 120px;
+          line-height: 28px;
+          max-width: 160px;
           overflow: hidden;
           text-decoration: none;
           text-overflow: ellipsis;
@@ -93,18 +96,12 @@ header {
   .last-update {
     color: $color-electricblue;
     font-family: $font-book;
-    font-size: 14px;
-    line-height: 44px;
+    font-size: 12px;
+    line-height: 16px;
     text-transform: uppercase;
 
     .label {
-      display: none;
-    }
-
-    @include breakpoint($bp07) {
-      .label {
-        display: inline-block;
-      }
+      display: inline-block;
     }
   }
 }
@@ -112,7 +109,7 @@ header {
 main {
   display: flex;
   flex-wrap: wrap;
-  padding: 88px 16px 0 16px;
+  padding: 96px 16px 0 16px;
 
   h2 {
     color: $color-electricblue;

@@ -58,8 +58,6 @@
             <div class="date">01 JAN</div>
             <div class="label">{{ configuration.labels.positives|safe }}</div>
           </div>
-          <div class="line"></div>
-          <div class="count">000</div>
         </div>
         <div id="box-recovered" class="box">
           <div class="contains-chart">
@@ -67,8 +65,6 @@
             <div class="date">01 JAN</div>
             <div class="label">{{ configuration.labels.recovered|safe }}</div>
           </div>
-          <div class="line"></div>
-          <div class="count">000</div>
         </div>
         <div id="box-deceased" class="box">
           <div class="contains-chart">
@@ -76,8 +72,23 @@
             <div class="date">01 JAN</div>
             <div class="label">{{ configuration.labels.deceased|safe }}</div>
           </div>
-          <div class="line"></div>
-          <div class="count">000</div>
+        </div>
+      </div>
+      <div id="totals">
+        <div class="updated">SINCE 01 JAN 1970</div>
+        <div class="contains-totals">
+          <div class="total positives">
+            <div class="updated">SINCE 01 JAN 1970</div>
+            <div class="value">0</div>
+          </div>
+          <div class="total recovered">
+            <div class="updated">SINCE 01 JAN 1970</div>
+            <div class="value">0</div>
+          </div>
+          <div class="total deceased">
+            <div class="updated">SINCE 01 JAN 1970</div>
+            <div class="value">0</div>
+          </div>
         </div>
       </div>
       <div id="deltas">

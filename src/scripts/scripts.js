@@ -270,7 +270,7 @@ $(function () {
 
     $('header .context ul').append(root);
 
-    $('header .last-update span').text(moment(data.updates.latest).format('L'));
+    $('header .last-update span').text(moment(data.updates.latest).format('LT - L'));
 
     $('#navigation').empty();
 
@@ -398,14 +398,16 @@ $(function () {
 
     renderBoxCharts(data);
 
-    $('#box-positives .count').attr('data-number', data.positives.total);
-    $('#box-positives .count').text(numeral(data.positives.total).format());
+    $('#totals .updated').text(sprintf(globalConfiguration.labels.differenceFromPreviousUpdate, moment('20200225').format('D MMMM YYYY')));
 
-    $('#box-recovered .count').attr('data-number', data.recovered.total);
-    $('#box-recovered .count').text(numeral(data.recovered.total).format());
+    $('#totals .positives .value').attr('data-number', data.positives.total);
+    $('#totals .positives .value').text(numeral(data.positives.total).format());
 
-    $('#box-deceased .count').attr('data-number', data.deceased.total);
-    $('#box-deceased .count').text(numeral(data.deceased.total).format());
+    $('#totals .recovered .value').attr('data-number', data.recovered.total);
+    $('#totals .recovered .value').text(numeral(data.recovered.total).format());
+
+    $('#totals .deceased .value').attr('data-number', data.deceased.total);
+    $('#totals .deceased .value').text(numeral(data.deceased.total).format());
 
     $('#deltas .positives .value').text(numeral(data.positives.delta).format());
     $('#deltas .positives .value').attr('data-number', data.positives.delta);

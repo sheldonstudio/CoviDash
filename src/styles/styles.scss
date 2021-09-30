@@ -172,17 +172,6 @@ main {
         }
       }
 
-      .count {
-        font-family: $font-light;
-        font-size: 32px;
-        letter-spacing: 0;
-        line-height: 50px;
-        
-        @include breakpoint($bp07) {
-          font-size: 40px;
-        }
-      }
-
       &:last-child {
         &, .line {
           margin-right: 0;
@@ -197,7 +186,7 @@ main {
         }
       }
 
-      .contains-chart .label, .count, .delta {
+      .contains-chart .label, .delta {
         color: $color-yellow;
       }
     }
@@ -209,7 +198,7 @@ main {
         }
       }
 
-      .contains-chart .label, .count, .delta {
+      .contains-chart .label, .delta {
         color: $color-green;
       }
     }
@@ -221,8 +210,79 @@ main {
         }
       }
 
-      .contains-chart .label, .count, .delta {
+      .contains-chart .label, .delta {
         color: $color-red;
+      }
+    }
+  }
+
+  #totals {
+    border-top: 1px solid $color-lightblue;
+    padding: 8px 0 0 0;
+    width: 100%;
+
+    .updated {
+      color: $color-electricblue;
+      font-family: $font-book;
+      font-size: 14px;
+      letter-spacing: 0;
+      line-height: 12px;
+      margin: 8px 0;
+      opacity: 0.60;
+      text-transform: uppercase;
+      width: 200px;
+    }
+
+    > .updated {
+      display: block;
+
+      @include breakpoint($bp07) {
+        display: none;
+      }
+    }
+
+    .contains-totals {
+      display: flex;
+      flex-direction: row;
+
+      .total {
+        box-sizing: border-box;
+        flex: 1;
+        font-family: $font-light;
+        font-size: 32px;
+        letter-spacing: 0;
+        line-height: 40px;
+        margin-right: 38px;
+        padding: 6px 0;
+        position: relative;
+        
+        @include breakpoint($bp07) {
+          font-size: 40px;
+        }
+
+        &:last-of-type {
+          margin-right: 0;
+        }
+
+        &.positives {
+          color: $color-yellow;
+        }
+
+        &.recovered {
+          color: $color-green;
+        }
+
+        &.deceased {
+          color: $color-red;
+        }
+
+        .updated {
+          display: none;
+
+          @include breakpoint($bp07) {
+            display: block;
+          }
+        }
       }
     }
   }
@@ -239,7 +299,7 @@ main {
       letter-spacing: 0;
       line-height: 12px;
       margin: 8px 0;
-      opacity: 0.30;
+      opacity: 0.60;
       text-transform: uppercase;
       width: 200px;
     }
@@ -266,10 +326,6 @@ main {
         margin-right: 38px;
         padding: 6px 0 12px 0;
         position: relative;
-
-        @include breakpoint($bp07) {
-          padding: 6px 0 12px 0;
-        }
 
         &:last-of-type {
           margin-right: 0;

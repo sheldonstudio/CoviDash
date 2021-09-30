@@ -56,42 +56,44 @@
           <div class="contains-chart">
             <div class="chart"></div>
             <div class="date">01 JAN</div>
+            <div class="label">{{ configuration.labels.positives|safe }}</div>
           </div>
           <div class="line"></div>
           <div class="count">000</div>
-          <div class="label">{{ configuration.labels.positives|safe }}</div>
-          <div class="line"></div>
-          <div class="delta">
-            <div class="value" data-sign="true">+000</div>
-            <div class="updated">SINCE 01 JAN 1970</div>
-          </div>
         </div>
         <div id="box-recovered" class="box">
           <div class="contains-chart">
             <div class="chart"></div>
             <div class="date">01 JAN</div>
+            <div class="label">{{ configuration.labels.recovered|safe }}</div>
           </div>
           <div class="line"></div>
           <div class="count">000</div>
-          <div class="label">{{ configuration.labels.recovered|safe }}</div>
-          <div class="line"></div>
-          <div class="delta">
-            <div class="value" data-sign="true">+000</div>
-            <div class="updated">SINCE 01 JAN 1970</div>
-          </div>
         </div>
         <div id="box-deceased" class="box">
           <div class="contains-chart">
             <div class="chart"></div>
             <div class="date">01 JAN</div>
+            <div class="label">{{ configuration.labels.deceased|safe }}</div>
           </div>
           <div class="line"></div>
           <div class="count">000</div>
-          <div class="label">{{ configuration.labels.deceased|safe }}</div>
-          <div class="line"></div>
-          <div class="delta">
-            <div class="value" data-sign="true">+000</div>
+        </div>
+      </div>
+      <div id="deltas">
+        <div class="updated">SINCE 01 JAN 1970</div>
+        <div class="contains-deltas">
+          <div class="delta positives">
             <div class="updated">SINCE 01 JAN 1970</div>
+            <div class="value" data-sign="true">+000</div>
+          </div>
+          <div class="delta recovered">
+            <div class="updated">SINCE 01 JAN 1970</div>
+            <div class="value" data-sign="true">+000</div>
+          </div>
+          <div class="delta deceased">
+            <div class="updated">SINCE 01 JAN 1970</div>
+            <div class="value" data-sign="true">+000</div>
           </div>
         </div>
       </div>

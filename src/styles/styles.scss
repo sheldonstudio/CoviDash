@@ -163,62 +163,26 @@ main {
           line-height: 20px;
           text-transform: uppercase;
         }
+
+        .label {
+          color: $color-white;
+          font-family: $font-book;
+          font-size: 14px;
+          letter-spacing: 0;
+          line-height: 17px;
+          padding: 12px 0;
+          text-transform: uppercase;
+        }
       }
 
       .count {
         font-family: $font-light;
-        font-size: 40px;
+        font-size: 32px;
         letter-spacing: 0;
         line-height: 50px;
-        padding: 24px 0 0 0;
-      }
-
-      .label {
-        color: $color-white;
-        font-family: $font-book;
-        font-size: 14px;
-        letter-spacing: 0;
-        line-height: 17px;
-        padding: 4px 0;
-        text-transform: uppercase;
-      }
-
-      .delta {
-        font-family: $font-book;
-        font-size: 14px;
-        letter-spacing: 0;
-        line-height: 17px;
-        padding: 12px 0 32px 0;
-        position: relative;
-
+        
         @include breakpoint($bp07) {
-          padding: 12px 0;
-        }
-
-        .updated {
-          color: $color-electricblue;
-          display: none;
-          font-family: $font-book;
-          font-size: 14px;
-          letter-spacing: 0;
-          line-height: 12px;
-          margin: 8px 0 0 0;
-          opacity: 0.30;
-          position: absolute;
-          text-transform: uppercase;
-          width: 200px;
-
-          @include breakpoint($bp07) {
-            display: block;
-            position: static;
-            width: 100%;
-          }
-        }
-      }
-
-      &:first-child {
-        .delta .updated {
-          display: block;
+          font-size: 40px;
         }
       }
 
@@ -236,7 +200,7 @@ main {
         }
       }
 
-      .count, .delta {
+      .contains-chart .label, .count, .delta {
         color: $color-yellow;
       }
     }
@@ -248,7 +212,7 @@ main {
         }
       }
 
-      .count, .delta {
+      .contains-chart .label, .count, .delta {
         color: $color-green;
       }
     }
@@ -260,8 +224,79 @@ main {
         }
       }
 
-      .count, .delta {
+      .contains-chart .label, .count, .delta {
         color: $color-red;
+      }
+    }
+  }
+
+  #deltas {
+    border-top: 1px solid $color-lightblue;
+    padding: 8px 0 0 0;
+    width: 100%;
+
+    .updated {
+      color: $color-electricblue;
+      font-family: $font-book;
+      font-size: 14px;
+      letter-spacing: 0;
+      line-height: 12px;
+      margin: 8px 0;
+      opacity: 0.30;
+      text-transform: uppercase;
+      width: 200px;
+    }
+
+    > .updated {
+      display: block;
+
+      @include breakpoint($bp07) {
+        display: none;
+      }
+    }
+
+    .contains-deltas {
+      display: flex;
+      flex-direction: row;
+
+      .delta {
+        box-sizing: border-box;
+        flex: 1;
+        font-family: $font-book;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 17px;
+        margin-right: 38px;
+        padding: 6px 0 12px 0;
+        position: relative;
+
+        @include breakpoint($bp07) {
+          padding: 6px 0 12px 0;
+        }
+
+        &:last-of-type {
+          margin-right: 0;
+        }
+
+        &.positives {
+          color: $color-yellow;
+        }
+
+        &.recovered {
+          color: $color-green;
+        }
+
+        &.deceased {
+          color: $color-red;
+        }
+
+        .updated {
+          display: none;
+
+          @include breakpoint($bp07) {
+            display: block;
+          }
+        }
       }
     }
   }

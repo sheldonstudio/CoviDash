@@ -401,23 +401,22 @@ $(function () {
     $('#box-positives .count').attr('data-number', data.positives.total);
     $('#box-positives .count').text(numeral(data.positives.total).format());
 
-    $('#box-positives .delta .value').attr('data-number', data.positives.delta);
-    $('#box-positives .delta .value').text(numeral(data.positives.delta).format());
-    $('#box-positives .delta .updated').text(sprintf(globalConfiguration.labels.differenceFromPreviousUpdate, moment(data.updates.previous).format('D MMMM YYYY')));
-
     $('#box-recovered .count').attr('data-number', data.recovered.total);
     $('#box-recovered .count').text(numeral(data.recovered.total).format());
-
-    $('#box-recovered .delta .value').attr('data-number', data.recovered.delta);
-    $('#box-recovered .delta .value').text(numeral(data.recovered.delta).format());
-    $('#box-recovered .delta .updated').text(sprintf(globalConfiguration.labels.differenceFromPreviousUpdate, moment(data.updates.previous).format('D MMMM YYYY')));
 
     $('#box-deceased .count').attr('data-number', data.deceased.total);
     $('#box-deceased .count').text(numeral(data.deceased.total).format());
 
-    $('#box-deceased .delta .value').attr('data-number', data.deceased.delta);
-    $('#box-deceased .delta .value').text(numeral(data.deceased.delta).format());
-    $('#box-deceased .delta .updated').text(sprintf(globalConfiguration.labels.differenceFromPreviousUpdate, moment(data.updates.previous).format('D MMMM YYYY')));
+    $('#deltas .positives .value').text(numeral(data.positives.delta).format());
+    $('#deltas .positives .value').attr('data-number', data.positives.delta);
+
+    $('#deltas .recovered .value').attr('data-number', data.recovered.delta);
+    $('#deltas .recovered .value').text(numeral(data.recovered.delta).format());
+
+    $('#deltas .deceased .value').attr('data-number', data.deceased.delta);
+    $('#deltas .deceased .value').text(numeral(data.deceased.delta).format());
+
+    $('#deltas .updated').text(sprintf(globalConfiguration.labels.differenceFromPreviousUpdate, moment(data.updates.previous).format('D MMMM YYYY')));
 
     $('#swabs-total .value').attr('data-number', data.swabs.total);
     $('#swabs-total .value').text(numeral(data.swabs.total).format());

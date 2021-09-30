@@ -149,24 +149,54 @@ main {
 
       .contains-chart {
         .chart {
-          height: 48px;
+          height: 64px;
           margin: 0 0 4px 0;
           overflow: hidden;
           width: 100%;
 
-          path {
-            fill: none;
-            stroke-width: 1;
+          .axis--x path.domain {
+            stroke: $color-lightblue;
+            stroke-width: 2;
           }
         }
 
-        .date {
-          color: $color-white;
-          font-family: $font-book;
-          font-size: 12px;
-          letter-spacing: 0;
-          line-height: 20px;
-          text-transform: uppercase;
+        .short-dates, .dates {
+          display: flex;
+          flex-direction: row;
+
+          .from, .until {
+            color: $color-electricblue;
+            flex: 1;
+            font-family: $font-book;
+            font-size: 12px;
+            letter-spacing: 0;
+            line-height: 20px;
+            text-transform: uppercase;
+          }
+
+          .from {
+            text-align: left;
+          }
+
+          .until {
+            text-align: right;
+          }
+        }
+
+        .short-dates {
+          display: flex;
+
+          @include breakpoint($bp07) {
+            display: none;
+          }
+        }
+
+        .dates {
+          display: none;
+
+          @include breakpoint($bp07) {
+            display: flex;
+          }
         }
 
         .label {
@@ -192,6 +222,10 @@ main {
         path {
           stroke: $color-yellow;
         }
+
+        rect {
+          fill: $color-yellow;
+        }
       }
 
       .contains-chart .label, .delta {
@@ -204,6 +238,10 @@ main {
         path {
           stroke: $color-green;
         }
+
+        rect {
+          fill: $color-green;
+        }
       }
 
       .contains-chart .label, .delta {
@@ -215,6 +253,10 @@ main {
       .contains-chart .chart {
         path {
           stroke: $color-red;
+        }
+
+        rect {
+          fill: $color-red;
         }
       }
 
@@ -613,7 +655,7 @@ main {
           font-size: 14px;
           letter-spacing: 0;
           line-height: 17px;
-          opacity: 0.5;
+          opacity: 0.6;
           text-decoration: none;
 
           img {
@@ -684,7 +726,7 @@ main {
         }
 
         .total {
-          opacity: 0.5;
+          opacity: 0.6;
         }
       }
     }

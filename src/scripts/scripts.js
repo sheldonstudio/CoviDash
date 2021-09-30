@@ -17,9 +17,17 @@ $(function () {
 
   function drawBoxChart(element, configuration) {
     var chart = element.find('.chart');
-    var date = element.find('.date');
 
-    date.text(moment(configuration.data[0].date).format('D MMM'));
+    var shortDateFormat = 'MMM YY',
+      dateFormat = 'DD MMM YYYY',
+      fromDate = moment(configuration.range.from),
+      untilDate = moment(configuration.range.until);
+
+    element.find('.short-dates .from').text(fromDate.format(shortDateFormat));
+    element.find('.short-dates .until').text(untilDate.format(shortDateFormat));
+
+    element.find('.dates .from').text(fromDate.format(dateFormat));
+    element.find('.dates .until').text(untilDate.format(dateFormat));
 
     // TODO refactor to update any existing graph
     chart.empty();
@@ -27,33 +35,36 @@ $(function () {
     var width = parseInt(chart.width());
     var height = parseInt(chart.height());
 
-    var xScale = d3.scaleTime()
-      .domain(d3.extent(configuration.data, function(d) { return d.date; }))
-      .range([0, width]);
+    var xScale = d3.scaleBand()
+      .domain(configuration.data.map(function(d) { return d.date; }))
+      .rangeRound([0, width])
+      .padding(0.5);
 
     var yScale = d3.scaleLinear()
       .domain([configuration.domain.min, configuration.domain.max])
-      .range([height, 0]);
-
-    var line = d3.line()
-      .x(function (d) {
-        return xScale(d.date);
-      })
-      .y(function (d) {
-        return yScale(d.value);
-      })
-      .curve(d3.curveMonotoneX);
+      .rangeRound([height, 0]);
 
     var svg = d3.select(chart[0])
       .append("svg")
       .attr("preserveAspectRatio", "xMinYMin meet")
       .attr("width", width)
-      .attr("height", height)
-      .append("g");
+      .attr("height", height);
 
-    svg.append("path")
-      .datum(configuration.data)
-      .attr("d", line);
+    svg.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(xScale));
+
+    svg.append("g")
+      .selectAll(".bar")
+      .data(configuration.data)
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return xScale(d.date); })
+      .attr("y", function(d) { return yScale(d.value); })
+      .attr("width", xScale.bandwidth())
+      .attr("height", function(d) { return height - yScale(d.value); });
   }
 
   function drawTrendChart(element, configuration) {
@@ -81,7 +92,7 @@ $(function () {
     );
 
     var max = d3.max(allValues);
-    max += Math.round(max * 0.10);
+    max += Math.round(max * 0.20);
 
     // TODO refactor to update any existing graph
     chart.empty();
@@ -302,14 +313,58 @@ $(function () {
   }
 
   function renderBoxCharts(data) {
+    var previousEntry = null;
+
+    var increments = data.timeline.map(function(entry) {
+      var tuple = [ entry[0], 0, 0, 0 ];
+
+      if (!!previousEntry) {
+        tuple[1] = (entry[1] - tuple[1]);
+        tuple[2] = (entry[2] - tuple[2]);
+        tuple[3] = (entry[3] - tuple[3]);
+      }
+
+      previousEntry = entry;
+
+      return tuple;
+    });
+
+    var range = {
+      from: d3.min(data.timeline, function (d) { return d[0]; }),
+      until: d3.max(data.timeline, function (d) { return d[0]; })
+    };
+
+    var values = {};
+    
+    _.each(increments, function(d) {
+      var year = moment(d[0]).year(),
+        week = Math.floor((moment(d[0]).week() === 53 ? 1 : moment(d[0]).week()) / 2),
+        key = year + '/' + (week < 10 ? '0' + week : week);
+
+      if (!_.has(values, key)) {
+        values[key] = {
+          key: key,
+          entry: [ moment().year(year).week(week * 2), 0, 0, 0 ]
+        };
+      }
+
+      values[key].entry[1] += d[1];
+      values[key].entry[2] += d[2];
+      values[key].entry[3] += d[3];
+    });
+
+    values = _.map(_.sortBy(_.values(values), 'key'), function (d) {
+      return d.entry;
+    });
+
     var allValues = [].concat(
-      data.timeline.map(function(entry) {
+      values.map(function(entry) {
         return entry[1];
       }),
-      data.timeline.map(function(entry) {
+      values.map(function(entry) {
         return entry[2];
       }),
-      data.timeline.map(function(entry) {
+      values.map(function(entry) {
         return entry[3];
       })
     );
@@ -318,21 +373,24 @@ $(function () {
 
     drawBoxChart($('#box-positives .contains-chart'), {
       domain: domain,
-      data: data.timeline.map(function(entry) {
+      range: range,
+      data: values.map(function(entry) {
         return { date: new Date(entry[0]), value: entry[1] };
       })
     });
 
     drawBoxChart($('#box-recovered .contains-chart'), {
       domain: domain,
-      data: data.timeline.map(function(entry) {
+      range: range,
+      data: values.map(function(entry) {
         return { date: new Date(entry[0]), value: entry[2] };
       })
     });
 
     drawBoxChart($('#box-deceased .contains-chart'), {
       domain: domain,
-      data: data.timeline.map(function(entry) {
+      range: range,
+      data: values.map(function(entry) {
         return { date: new Date(entry[0]), value: entry[3] };
       })
     });

@@ -37,8 +37,9 @@ $(function () {
 
     var xScale = d3.scaleBand()
       .domain(configuration.data.map(function(d) { return d.date; }))
-      .rangeRound([0, width])
-      .padding(0.5);
+      .range([0, width])
+      .paddingInner(0.5)
+      .paddingOuter(0.0);
 
     var yScale = d3.scaleLinear()
       .domain([configuration.domain.min, configuration.domain.max])

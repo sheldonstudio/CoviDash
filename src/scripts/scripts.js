@@ -336,7 +336,7 @@ $(function () {
     };
 
     var values = {};
-    
+
     _.each(increments, function(d) {
       var year = moment(d[0]).year(),
         week = Math.floor((moment(d[0]).week() === 53 ? 1 : moment(d[0]).week()) / 2),
@@ -345,13 +345,21 @@ $(function () {
       if (!_.has(values, key)) {
         values[key] = {
           key: key,
-          entry: [ moment().year(year).week(week * 2), 0, 0, 0 ]
+          entry: [ moment().year(year).week(week * 2), 0, 0, 0 ],
+          count: 0
         };
       }
 
       values[key].entry[1] += d[1];
       values[key].entry[2] += d[2];
       values[key].entry[3] += d[3];
+      values[key].count += 1;
+    });
+
+    _.each(values, function (d) {
+      for (var j = 1; j < 4; j++) {
+        d.entry[j] = Math.round(d.entry[j] / (d.count / 14));
+      }
     });
 
     values = _.map(_.sortBy(_.values(values), 'key'), function (d) {

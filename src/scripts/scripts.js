@@ -330,35 +330,60 @@ $(function () {
       return tuple;
     });
 
+    var chartWidth = d3.sum([
+      $('#box-positives .contains-chart').width(),
+      $('#box-recovered .contains-chart').width(),
+      $('#box-deceased .contains-chart').width(),
+    ]) / 3;
+
+    var daysPerDataPoint = Math.ceil(increments.length / chartWidth) * 2;
+
     var range = {
       from: d3.min(data.timeline, function (d) { return d[0]; }),
       until: d3.max(data.timeline, function (d) { return d[0]; })
     };
 
-    var values = {};
+    var values = {}, buffer = [];
 
-    _.each(increments, function(d) {
-      var year = moment(d[0]).year(),
-        week = Math.floor((moment(d[0]).week() === 53 ? 1 : moment(d[0]).week()) / 2),
-        key = year + '/' + (week < 10 ? '0' + week : week);
+    _.each(increments, function(d, i) {
+      buffer.push(d);
 
-      if (!_.has(values, key)) {
+      if (buffer.length === daysPerDataPoint) {
+        var key = _.keys(values).length;
+
         values[key] = {
           key: key,
-          entry: [ moment().year(year).week(week * 2), 0, 0, 0 ],
-          count: 0
+          entry: [
+            moment(buffer[0][0]),
+            d3.sum(buffer, function (d) { return d[1]; }),
+            d3.sum(buffer, function (d) { return d[2]; }),
+            d3.sum(buffer, function (d) { return d[3]; })
+          ],
+          count: buffer.length
         };
-      }
 
-      values[key].entry[1] += d[1];
-      values[key].entry[2] += d[2];
-      values[key].entry[3] += d[3];
-      values[key].count += 1;
+        buffer = [];
+      }
     });
+
+    if (buffer.length > 0) {
+      var key = _.keys(values).length;
+
+      values[key] = {
+        key: key,
+        entry: [
+          moment(buffer[0][0]),
+          d3.sum(buffer, function (d) { return d[1]; }),
+          d3.sum(buffer, function (d) { return d[2]; }),
+          d3.sum(buffer, function (d) { return d[3]; })
+        ],
+        count: buffer.length
+      };
+    }
 
     _.each(values, function (d) {
       for (var j = 1; j < 4; j++) {
-        d.entry[j] = Math.round(d.entry[j] / (d.count / 14));
+        d.entry[j] = Math.round(d.entry[j] / (d.count / daysPerDataPoint));
       }
     });
 

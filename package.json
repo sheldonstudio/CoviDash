@@ -27,12 +27,12 @@
     "gulp-imagemin": "^6.2.0",
     "gulp-mode": "^1.0.2",
     "gulp-nunjucks-render": "^2.2.3",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.2",
     "gulp-util": "^3.0.8",
     "gulp-webserver": "^0.9.1",
     "lodash": "^4.17.15",
-    "node-sass": "^4.13.1"
+    "sass": "^1.48.0"
   },
   "scripts": {
     "clean": "gulp clean",

@@ -50,6 +50,13 @@ class ItalyAdapter implements CountryAdapter {
 
     $entries = $areaEntries;
 
+    // https://github.com/pcm-dpc/COVID-19/issues/1186
+    foreach ($entries as $entry) {
+      if (isset($entry->{' data'})) {
+        $entry->data = $entry->{' data'};
+      }
+    }
+
     usort($entries, function($a, $b) {
       return strcmp($b->data, $a->data);
     });

@@ -32,7 +32,7 @@
     "gulp-util": "^3.0.8",
     "gulp-webserver": "^0.9.1",
     "lodash": "^4.17.15",
-    "sass": "^1.32.13"
+    "sass": "1.32.13"
   },
   "scripts": {
     "clean": "gulp clean",

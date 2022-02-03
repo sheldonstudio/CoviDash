@@ -16,6 +16,14 @@ $(function () {
   }
 
   function drawBoxChart(element, configuration) {
+    var ref = element.find('.ref .value');
+
+    if (configuration.domain.max > 1000000) {
+      ref.text((configuration.domain.max / 1000000) + "M");
+    } else {
+      ref.text((configuration.domain.max / 1000) + "K");
+    }
+
     var chart = element.find('.chart');
 
     var shortDateFormat = 'MMM YY',
@@ -29,7 +37,7 @@ $(function () {
     element.find('.dates .from').text(fromDate.format(dateFormat));
     element.find('.dates .until').text(untilDate.format(dateFormat));
 
-    // TODO refactor to update any existing graph
+    // TODO: refactor to update any existing graph
     chart.empty();
 
     var width = parseInt(chart.width());
@@ -95,7 +103,7 @@ $(function () {
     var max = d3.max(allValues);
     max += Math.round(max * 0.20);
 
-    // TODO refactor to update any existing graph
+    // TODO: refactor to update any existing graph
     chart.empty();
 
     var width = parseInt(chart.width());
@@ -320,9 +328,9 @@ $(function () {
       var tuple = [ entry[0], 0, 0, 0 ];
 
       if (!!previousEntry) {
-        tuple[1] = (entry[1] - tuple[1]);
-        tuple[2] = (entry[2] - tuple[2]);
-        tuple[3] = (entry[3] - tuple[3]);
+        tuple[1] = (entry[1] - previousEntry[1]);
+        tuple[2] = (entry[2] - previousEntry[2]);
+        tuple[3] = (entry[3] - previousEntry[3]);
       }
 
       previousEntry = entry;
@@ -391,22 +399,23 @@ $(function () {
       return d.entry;
     });
 
-    var allValues = [].concat(
-      values.map(function(entry) {
-        return entry[1];
-      }),
-      values.map(function(entry) {
-        return entry[2];
-      }),
-      values.map(function(entry) {
-        return entry[3];
-      })
-    );
+    var computeDomain = function (values) {
+      let max = d3.max(values);
 
-    var domain = { min: 0, max: d3.max(allValues) };
+      if (max < 1000000) {
+        max = Math.ceil(max / 1000) * 1000;
+      } else {
+        max = Math.ceil(max / 100000) * 100000;
+      }
+
+      return {
+        min: 0,
+        max: max
+      };
+    };
 
     drawBoxChart($('#box-positives .contains-chart'), {
-      domain: domain,
+      domain: computeDomain(values.map(function (d) { return d[1]; })),
       range: range,
       data: values.map(function(entry) {
         return { date: new Date(entry[0]), value: entry[1] };
@@ -414,7 +423,7 @@ $(function () {
     });
 
     drawBoxChart($('#box-recovered .contains-chart'), {
-      domain: domain,
+      domain: computeDomain(values.map(function (d) { return d[2]; })),
       range: range,
       data: values.map(function(entry) {
         return { date: new Date(entry[0]), value: entry[2] };
@@ -422,7 +431,7 @@ $(function () {
     });
 
     drawBoxChart($('#box-deceased .contains-chart'), {
-      domain: domain,
+      domain: computeDomain(values.map(function (d) { return d[3]; })),
       range: range,
       data: values.map(function(entry) {
         return { date: new Date(entry[0]), value: entry[3] };

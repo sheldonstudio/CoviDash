@@ -148,6 +148,33 @@ main {
       }
 
       .contains-chart {
+        .ref {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          margin-right: 16px;
+
+          @include breakpoint($bp07) {
+            margin-right: 38px;
+          }
+
+          .value {
+            color: $color-electricblue;
+            font-family: $font-book;
+            font-size: 12px;
+            letter-spacing: 0;
+            line-height: 20px;
+            margin-right: 4px;
+            text-transform: uppercase;
+          }
+
+          .line {
+            background-color: $color-lightblue;
+            flex: 1;
+            height: 1px;
+          }
+        }
+
         .chart {
           height: 80px;
           margin: 0 0 4px 0;
@@ -211,7 +238,7 @@ main {
       }
 
       &:last-child {
-        &, .line {
+        &, .line, .ref {
           margin-right: 0;
         }
       }

@@ -206,6 +206,10 @@ class ItalyAdapter implements CountryAdapter {
 
     curl_close($curl);
 
+    if (empty($hash->object->sha)) {
+      throw new Exception("Empty/invalid response when getting the checksum.");
+    }
+
     return $hash->object->sha;
   }
 
@@ -213,6 +217,18 @@ class ItalyAdapter implements CountryAdapter {
     $this->country = json_decode(file_get_contents(ITALY_COUNTRY_DATA_URL));
     $this->states = json_decode(file_get_contents(ITALY_STATES_DATA_URL));
     $this->areas = json_decode(file_get_contents(ITALY_AREAS_DATA_URL));
+
+    if (empty($this->country) || !is_array($this->country)) {
+      throw new Exception("Empty/invalid response when getting the 'country' data.");
+    }
+
+    if (empty($this->states) || !is_array($this->states)) {
+      throw new Exception("Empty/invalid response when getting the 'states' data.");
+    }
+
+    if (empty($this->areas) || !is_array($this->areas)) {
+      throw new Exception("Empty/invalid response when getting the 'areas' data.");
+    }
 
     $entries = $this->country;
 
